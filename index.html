@@ -383,6 +383,7 @@
       //*******Change streams style
       function streamStyle(tmpAtt) {
         //*******Select stream class
+        
         var tmpFeat = topoG.selectAll(".streams");
 
         //*******Get data for passed in attribute
@@ -397,10 +398,15 @@
             .domain([d3.min(tmpVals), d3.max(tmpVals)])
             .range(colorbrewer.YlOrRd[tmpMin ]);
         }
-        else {
+        else if (tmpMin == 2) {
           var crossColor = d3.scale.quantize()
             .domain([1, 2])
             .range(["red", "yellow"]);
+        }
+        else {
+          var crossColor = d3.scale.quantize()
+            .domain([0, 0])
+            .range(["yellow"]);
         }
 
         //*******Style and label streams by attribute value
@@ -494,6 +500,7 @@
                 console.log("No TSV data for edge " + d.properties.edge);
               }
             });
+            streamStyle(d3.select("#streamSelect").node().value);
           });
         }
       }
